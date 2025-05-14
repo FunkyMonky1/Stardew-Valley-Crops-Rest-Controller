@@ -1,0 +1,25 @@
+### Get all crops
+GET http://localhost:8081/crops
+
+###
+
+### Get crop by ID
+GET http://localhost:8081/crops/1
+
+
+
+### Update crop with ID
+PUT http://localhost:8081/crops/1
+Content-Type: application/json
+
+{
+  "crop": "Blue Jazz",
+  "seasons": "Spring",
+  "growthTime": 7,
+  "sellPrice": 50
+}
+
+###
+
+### Delete crop with ID
+DELETE http://localhost:8081/crops/1

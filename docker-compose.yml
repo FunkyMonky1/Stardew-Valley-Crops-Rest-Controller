@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: postgres-spring-boot
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: FunkyMonky1
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cropsdb
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  app:
+    container_name: stradew-valley-api
+    image: stradew-valley-crop-api  # Das Image hast du vorher per `docker build` erzeugt
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cropsdb
+      SPRING_DATASOURCE_USERNAME: FunkyMonky1
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+    networks:
+      - db
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
