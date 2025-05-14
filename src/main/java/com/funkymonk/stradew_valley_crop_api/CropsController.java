@@ -22,13 +22,13 @@ public class CropsController {
     //hier
     CollectionModel<EntityModel<Crops>> all() {
 
-        List<EntityModel<Crops>> employees = repository.findAll().stream()
-                .map(employee -> EntityModel.of(employee,
-                        linkTo(methodOn(CropsController.class).one(employee.getId())).withSelfRel(),
+        List<EntityModel<Crops>> crops = repository.findAll().stream()
+                .map(crop -> EntityModel.of(crop,
+                        linkTo(methodOn(CropsController.class).one(crop.getId())).withSelfRel(),
                         linkTo(methodOn(CropsController.class).all()).withRel("crops")))
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(employees, linkTo(methodOn(CropsController.class).all()).withSelfRel());
+        return CollectionModel.of(crops, linkTo(methodOn(CropsController.class).all()).withSelfRel());
     }
     @PostMapping("/crops")
     Crops newCrop(@RequestBody Crops crop) {
